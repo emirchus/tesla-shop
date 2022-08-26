@@ -22,12 +22,12 @@ export const lightTheme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          borderRadius: '14px',
+          borderRadius: '7px',
           [`& fieldset`]: {
-            borderRadius: '14px'
+            borderRadius: '7px'
           }
         }
-      }
+      },
     },
 
     MuiLink: {

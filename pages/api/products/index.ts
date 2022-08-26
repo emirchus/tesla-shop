@@ -35,7 +35,7 @@ const getProducts = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   }
 
   const products = await ProductModel.find(condition)
-    .select('title images price inStock slug -_id')
+    .select('title images price inStock slug gender -_id')
     .lean();
 
   await mongo.disconnect();

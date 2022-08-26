@@ -12,6 +12,7 @@ type Data =
 export default function (req: NextApiRequest, res: NextApiResponse<Data>) {
   switch (req.method) {
     case 'GET':
+      return getProduct(req, res);
       break;
     default:
       return res.status(501).json({ message: 'Not implemented' });

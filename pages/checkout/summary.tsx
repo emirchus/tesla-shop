@@ -9,12 +9,15 @@ import {
   Typography
 } from '@mui/material';
 import NextLink from 'next/link';
-import React from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { CartList, OrderSummary } from '../../components/cart';
 import { ShopLayout } from '../../components/layout';
 import { BackButton } from '../../components/ui';
+import { CartContext } from '../../context';
 
 function SummaryPage() {
+  const { cart, orderSummary } = useContext(CartContext);
+
   return (
     <ShopLayout
       title="Resúmen | Tesla Shop"
@@ -26,7 +29,7 @@ function SummaryPage() {
       </Typography>
       <Grid container sx={{ mt: 2 }}>
         <Grid item xs={12} sm={7}>
-          <CartList editable={false} />
+          <CartList productsSummary={cart} editable={false} />
         </Grid>
         <Grid item xs={12} sm={5} display="flex" justifyContent="end">
           <Card className="summary-card">
@@ -58,10 +61,10 @@ function SummaryPage() {
               <Divider sx={{ my: 2 }} />
 
               <OrderSummary
-                total={61.5}
-                shipping={0}
-                subTotal={41}
-                tax={20.5}
+                total={orderSummary.total || 0}
+                shipping={orderSummary.shipping}
+                subTotal={orderSummary.subTotal}
+                tax={orderSummary.taxes}
               />
 
               <Box sx={{ mt: 3 }}>

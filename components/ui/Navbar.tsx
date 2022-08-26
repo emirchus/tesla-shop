@@ -1,18 +1,48 @@
-import { SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material';
+import {
+  ClearOutlined,
+  SearchOutlined,
+  ShoppingCartOutlined
+} from '@mui/icons-material';
 import {
   AppBar,
   Badge,
   Box,
   Button,
   IconButton,
+  InputAdornment,
   Link,
+  TextField,
   Toolbar,
   Typography
 } from '@mui/material';
 import NextLink from 'next/link';
-import React, { FC } from 'react';
+import { useRouter } from 'next/router';
+import React, { FC, useContext, useState } from 'react';
+import { CartContext, UiContext } from '../../context';
 
 export const Navbar: FC = () => {
+  const { asPath, push } = useRouter();
+
+  const { toggleSideMenu: togleSideMenu } = useContext(UiContext);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [isSearchVisible, setSearchVisible] = useState<boolean>(false);
+  const { cart } = useContext(CartContext);
+
+  const handleToggleMenu = () => {
+    togleSideMenu(true);
+  };
+
+  const navigateTo = (url: string) => {
+    console.log('url');
+    togleSideMenu(false);
+    push(url);
+  };
+
+  const handleSearch = () => {
+    if (searchTerm.trim().length === 0) return;
+
+    navigateTo(`/search/${searchTerm}`);
+  };
   return (
     <AppBar>
       <Toolbar
@@ -53,40 +83,108 @@ export const Navbar: FC = () => {
         >
           <NextLink href="/category/men" passHref>
             <Link>
-              <Button>Hombres</Button>
+              <Button
+                color={asPath.startsWith('/category/men') ? 'primary' : 'info'}
+              >
+                Hombres
+              </Button>
             </Link>
           </NextLink>
 
           <NextLink href="/category/women" passHref>
             <Link>
-              <Button>Mujeres</Button>
+              <Button
+                color={
+                  asPath.startsWith('/category/women') ? 'primary' : 'info'
+                }
+              >
+                Mujeres
+              </Button>
             </Link>
           </NextLink>
 
           <NextLink href="/category/kid" passHref>
             <Link>
-              <Button>Niños</Button>
+              <Button
+                color={asPath.startsWith('/category/kid') ? 'primary' : 'info'}
+              >
+                Niños
+              </Button>
             </Link>
           </NextLink>
         </Box>
 
         <Box flex={1}></Box>
 
-        <IconButton name="Buscar">
+        {isSearchVisible ? (
+          <Box
+            sx={{
+              width: '20%',
+              mx: 2,
+              display: { sm: 'flex', xs: 'none' }
+            }}
+          >
+            <TextField
+              autoFocus
+              type="text"
+              variant="outlined"
+              placeholder="Buscar..."
+              value={searchTerm}
+              className="fadeIn"
+              size="small"
+              onChange={e => setSearchTerm(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && handleSearch()}
+              onBlur={() => setSearchVisible(false)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setSearchTerm('')}
+                    >
+                      <ClearOutlined />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+            />
+          </Box>
+        ) : (
+          <IconButton
+            name="Buscar"
+            sx={{ display: { sm: 'flex', xs: 'none' } }}
+            onClick={() => setSearchVisible(true)}
+          >
+            <SearchOutlined />
+          </IconButton>
+        )}
+
+        <IconButton
+          name="Buscar"
+          sx={{ display: { xs: 'flex', sm: 'none' } }}
+          onClick={handleToggleMenu}
+        >
           <SearchOutlined />
         </IconButton>
 
         <NextLink href="/cart" passHref>
           <Link>
             <IconButton name="Carrito">
-              <Badge badgeContent={2} color="secondary">
+              <Badge
+                badgeContent={
+                  cart.length > 0
+                    ? cart.reduce((prev, curr) => prev + curr.quantity, 0)
+                    : null
+                }
+                color="secondary"
+              >
                 <ShoppingCartOutlined />
               </Badge>
             </IconButton>
           </Link>
         </NextLink>
 
-        <Button>Menu</Button>
+        <Button onClick={handleToggleMenu}>Menu</Button>
       </Toolbar>
     </AppBar>
   );

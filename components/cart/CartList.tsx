@@ -1,26 +1,17 @@
 import { FC } from 'react';
 import { CartProduct } from '.';
-import { initialData } from '../../database/products';
-
-const productsSummary = [
-  initialData.products[0],
-  initialData.products[5],
-  initialData.products[2]
-];
+import { CartProduct as ICartProduct } from '../../interfaces';
 
 interface Props {
   editable?: boolean;
+  productsSummary: ICartProduct[];
 }
 
-export const CartList: FC<Props> = ({ editable = false }) => {
+export const CartList: FC<Props> = ({ editable = false, productsSummary }) => {
   return (
     <>
-      {productsSummary.map(product => (
-        <CartProduct
-          key={product.slug}
-          product={product as any}
-          editable={editable}
-        />
+      {productsSummary.map((product, index) => (
+        <CartProduct key={index} product={product} editable={editable} />
       ))}
     </>
   );

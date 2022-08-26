@@ -3,6 +3,7 @@ import {
   Card,
   CardActionArea,
   CardMedia,
+  Chip,
   CircularProgress,
   Grid,
   Link,
@@ -20,6 +21,8 @@ interface Props {
 export const ProductCard: FC<Props> = ({ product }) => {
   const [isHover, setIsHover] = useState(false);
 
+  const [isLoaded, setIsLoaded] = useState(false);
+
   const handleMouseEnter = () => {
     setIsHover(true);
   };
@@ -30,9 +33,15 @@ export const ProductCard: FC<Props> = ({ product }) => {
 
   const productImage = useMemo(() => {
     return isHover
-      ? `products/${product.images[1]}`
-      : `products/${product.images[0]}`;
+      ? `/products/${product.images[1]}`
+      : `/products/${product.images[0]}`;
   }, [isHover, product.images]);
+
+  const handleImageLoading = (
+    event: React.SyntheticEvent<HTMLImageElement>
+  ) => {
+    setIsLoaded(true);
+  };
 
   return (
     <Grid
@@ -45,18 +54,33 @@ export const ProductCard: FC<Props> = ({ product }) => {
     >
       <Card>
         <CardActionArea>
-          <NextLink href={`/products/${product.slug}`} passHref prefetch={false}>
+          {product.inStock === 0 && (
+            <Chip
+              color="primary"
+              label="Sin Stock"
+              sx={{ position: 'absolute', zIndex: 99, top: 10, left: 10 }}
+            />
+          )}
+          <NextLink
+            href={`/products/${product.slug}`}
+            passHref
+            prefetch={false}
+          >
             <Link>
               <CardMedia
                 component="img"
                 image={productImage}
                 alt={product.title}
+                onLoad={handleImageLoading}
               />
             </Link>
           </NextLink>
         </CardActionArea>
       </Card>
-      <Box sx={{ mt: 1 }} className="fadeIn">
+      <Box
+        sx={{ mt: 1, display: isLoaded ? 'block' : 'none' }}
+        className="fadeIn"
+      >
         <Typography fontWeight={700}>{product.title}</Typography>
         <Typography fontWeight={500}>${product.price}</Typography>
       </Box>

@@ -30,7 +30,7 @@ export const OrderSummary: FC<Props> = ({ total, shipping, subTotal, tax }) => {
           {shipping != undefined
             ? shipping == 0
               ? 'Gratis'
-              : shipping
+              : `$${shipping}`
             : 'Calculado en Checkout'}
         </Typography>
       </Grid>
