@@ -76,7 +76,7 @@ const ProductPage: FC<ProductProps> = ({ product }) => {
     <ShopLayout
       title={`${product?.title} | Tesla Shop`}
       description={product?.description || 'Cargando...'}
-      imageFullUrl={`${window.location.origin}/products/${product.images[0]}`}
+      imageFullUrl={`${process.env.NEXT_PUBLIC_URL!}/products/${product.images[0]}`}
     >
       <Grid container spacing={3}>
         <Grid item xs={12} sm={7}>
