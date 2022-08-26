@@ -12,6 +12,7 @@ import { getAllProductsSlugs, getProductBySlug } from '../../database';
 import { handleClientScriptLoad } from 'next/script';
 import { useContext } from 'react';
 import { CartContext } from '../../context';
+import { useRouter } from 'next/router';
 interface ProductProps {
   product: Product;
 }
@@ -29,6 +30,8 @@ const ProductPage: FC<ProductProps> = ({ product }) => {
   });
 
   const { addToCart, cart, updateCart } = useContext(CartContext);
+
+  const router = useRouter();
 
   const handleAddToCart = () => {
     const hasProductInCart = cart.some(
@@ -73,6 +76,7 @@ const ProductPage: FC<ProductProps> = ({ product }) => {
     <ShopLayout
       title={`${product?.title} | Tesla Shop`}
       description={product?.description || 'Cargando...'}
+      imageFullUrl={`${window.location.origin}/products/${product.images[0]}`}
     >
       <Grid container spacing={3}>
         <Grid item xs={12} sm={7}>

@@ -51,7 +51,7 @@ function OrderPage() {
 
       <Grid container sx={{ mt: 2 }}>
         <Grid item xs={12} sm={7}>
-          <CartList editable={false} />
+          {/* <CartList editable={false} /> */}
         </Grid>
         <Grid item xs={12} sm={5} display="flex" justifyContent="end">
           <Card className="summary-card">
