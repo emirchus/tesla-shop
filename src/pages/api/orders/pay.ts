@@ -78,7 +78,7 @@ const payOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
 const getPaypalBearerToken = async (): Promise<string | null> => {
   const PAYPAL_CLIENT = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
-  const PAYPAL_SECRET = process.env.NEXT_PUBLIC_PAYPAL_SECRET;
+  const PAYPAL_SECRET = process.env.PAYPAL_SECRET;
 
   const paypalCredentials = Buffer.from(
     `${PAYPAL_CLIENT}:${PAYPAL_SECRET}`,
