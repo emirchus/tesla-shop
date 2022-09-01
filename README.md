@@ -23,6 +23,12 @@ http://localhost:3000/api/seed
 $ yarn install
 ```
 ### Clonar .env.template y configurar
+```
+MONGODB_URI= URL a la base datos
+
+NEXT_PUBLIC_URL= URL al origen de la web
+NEXT_PUBLIC_TAX=impuestos para el summary
+```
 
 ## Ejecutar modo desarrollo
 ```
