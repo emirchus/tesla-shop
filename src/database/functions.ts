@@ -16,7 +16,7 @@ export const getProductBySlug = async (
   product.images = product.images.map(image => {
     return image.includes('http')
       ? image
-      : `${process.env.NEXT_PUBLIC_URL}products/${image}`;
+      : `${process.env.NEXT_PUBLIC_URL}/products/${image}`;
   });
 
   return JSON.parse(JSON.stringify(product));
@@ -45,7 +45,7 @@ export const searchProducts = async (term: string): Promise<Product[]> => {
     product.images = product.images.map(image => {
       return image.includes('http')
         ? image
-        : `${process.env.NEXT_PUBLIC_URL}products/${image}`;
+        : `${process.env.NEXT_PUBLIC_URL}/products/${image}`;
     });
 
     return product;
