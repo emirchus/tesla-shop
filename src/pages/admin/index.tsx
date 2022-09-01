@@ -61,7 +61,7 @@ const DashboardPage = () => {
       icon={<DashboardTwoTone />}
     >
       {data && (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} className="fadeIn">
           <SummaryCard
             title={orders}
             description="Ordenes totales"

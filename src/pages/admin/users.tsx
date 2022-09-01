@@ -80,6 +80,7 @@ const UsersPage = () => {
           my: 2,
           height: 'calc(100vh - 200px)'
         }}
+        className="fadeIn"
       >
         <Grid
           item

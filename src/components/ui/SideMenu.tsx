@@ -150,7 +150,7 @@ export const SideMenu = () => {
             </ListItem>
           )}
 
-          {user?.role == 'admin' && (
+          {['admin', 'super-user', 'SEO'].includes(user?.role || "client") && (
             <>
               {/* Admin */}
               <Divider />
@@ -163,13 +163,14 @@ export const SideMenu = () => {
                 <ListItemText primary={'Dashboard'} />
               </ListItem>
 
-              <ListItem button onClick={() => navigateTo(`/admin/`)}>
+              <ListItem button onClick={() => navigateTo(`/admin/products`)}>
                 <ListItemIcon>
                   <CategoryOutlined />
                 </ListItemIcon>
                 <ListItemText primary={'Productos'} />
               </ListItem>
-              <ListItem button>
+
+              <ListItem button onClick={() => navigateTo(`/admin/orders`)}>
                 <ListItemIcon>
                   <ConfirmationNumberOutlined />
                 </ListItemIcon>

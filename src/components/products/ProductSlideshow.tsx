@@ -11,7 +11,7 @@ export const ProductSlideshow: FC<Props> = ({ images }) => {
     <div className="slide-container">
       <Slide easing="ease" duration={700} indicators autoplay={false}>
         {images.map(image => {
-          const url = `/products/${image}`;
+          const url = image;
           return (
             <div key={image} className={css['each-slide']}>
               <div

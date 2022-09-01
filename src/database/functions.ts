@@ -13,6 +13,12 @@ export const getProductBySlug = async (
 
   if (!product) return null;
 
+  product.images = product.images.map(image => {
+    return image.includes('http')
+      ? image
+      : `${process.env.NEXT_PUBLIC_URL}products/${image}`;
+  });
+
   return JSON.parse(JSON.stringify(product));
 };
 
@@ -35,7 +41,17 @@ export const searchProducts = async (term: string): Promise<Product[]> => {
     .lean();
   await mongo.disconnect();
 
-  return products;
+  const mappedProducts = products.map(product => {
+    product.images = product.images.map(image => {
+      return image.includes('http')
+        ? image
+        : `${process.env.NEXT_PUBLIC_URL}products/${image}`;
+    });
+
+    return product;
+  });
+
+  return mappedProducts;
 };
 
 export const getOrderById = async (id: string): Promise<Order | null> => {
@@ -59,7 +75,9 @@ export const getOrdersByUserId = async (id: string): Promise<Order[]> => {
 
   const orders = await OrderModel.find({
     user: id
-  }).sort({updatedAt: -1}).lean();
+  })
+    .sort({ updatedAt: -1 })
+    .lean();
 
   await mongo.disconnect();
 

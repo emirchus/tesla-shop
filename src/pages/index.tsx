@@ -11,8 +11,6 @@ import { useProducts } from '../hooks';
 const Home: NextPage = () => {
   const { products, isLoading } = useProducts();
 
-  const session = useSession();
-
   return (
     <ShopLayout
       title="Teslo Shop | Home"

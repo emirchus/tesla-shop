@@ -63,7 +63,7 @@ export const CartProduct: FC<Props> = ({ product, editable }) => {
     <Grid container spacing={2} sx={{ mb: 1 }}>
       <Grid item xs={2}>
         <CardMedia
-          image={`/products/${product.image}`}
+          image={product.image}
           component="img"
           sx={{ borderRadius: '15px', objectFit: 'cover' }}
           height={100}

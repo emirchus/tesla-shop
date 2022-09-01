@@ -40,5 +40,15 @@ const getProducts = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   await mongo.disconnect();
 
-  return res.status(200).json(products);
+  const mappedProducts = products.map(product => {
+    product.images = product.images.map(image => {
+      return image.includes('http')
+        ? image
+        : `${process.env.NEXT_PUBLIC_URL}products/${image}`;
+    });
+
+    return product;
+  });
+
+  return res.status(200).json(mappedProducts);
 };
